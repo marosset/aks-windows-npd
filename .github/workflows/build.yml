@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v2
+      - name: login to GitHub container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: build image for ci
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          ./build.ps1
+      - name: build image for release
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          $version = Get-Content VERSION
+          ./build.ps1 -push -version=$version
