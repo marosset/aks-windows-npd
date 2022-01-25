@@ -33,4 +33,4 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         run: |
           $version = Get-Content VERSION
-          ./build.ps1 -push -version=$version
+          ./build.ps1 -push -version $version
