@@ -5,8 +5,8 @@ Daemonset used to configure node-problem-detector on Windows machines running in
 ## Deploy
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/marosset/aks-windows-npd/win-npd-rbac.yaml
-kubectl apply -f https://raw.githubusercontent.com/marosset/aks-windows-npd/win-npd.yaml
+kubectl apply -f https://raw.githubusercontent.com/marosset/aks-windows-npd/main/win-npd-rbac.yaml
+kubectl apply -f https://raw.githubusercontent.com/marosset/aks-windows-npd/main/win-npd.yaml
 
 ```
 
