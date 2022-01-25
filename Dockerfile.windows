@@ -1,0 +1,8 @@
+#FROM mcr.microsoft.com/windows/nanoserver:1809
+# netapi32.dll is needed and not present in nanoserver
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+ADD windows-kubelet-monitor-filelog.json /npd/windows-kubelet-monitor-filelog.json
+ADD build/bin/node-problem-detector.exe /npd/node-problem-detector.exe
+
+CMD ["/npd/node-problem-detector.exe", "--logtostderr", "--config.system-log-monitor=/npd/windows-kubelet-monitor-filelog.json", "-v=5"]

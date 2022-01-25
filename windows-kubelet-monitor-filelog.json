@@ -1,0 +1,27 @@
+{
+	"plugin": "filelog",
+	"pluginConfig": {
+		"timestamp": "^\\w(\\d{4} \\d{2}:\\d{2}:\\d{2})",
+		"message": "go:\\d*\\].(.*)?",
+		"timestampFormat": "0102 15:04:05"
+	},
+	"logPath": "C:\\k\\kubelet.err.log",
+	"lookback": "10m",
+	"bufferSize": 10,
+	"source": "kubelet",
+	"conditions": [
+        {
+            "type": "MarkedUnhealthyByCustomer",
+            "reason": "MarkedUnhealthyByCustomer",
+            "message": "error detected"
+        }
+    ],
+	"rules": [
+        {
+            "type": "permanent",
+            "condition": "MarkedUnhealthyByCustomer",
+            "reason": "container exited unexpectedly: unknown",
+            "pattern": ".*The virtual machine or container exited unexpectedly.: unknown.*"
+        }
+	]
+}
